@@ -13,7 +13,6 @@
 
   <div>
     <%= form.label :Тип_поста, class: "form-label" %>
-    <%#= form.text_field :post_type_id %>
     <%= form.collection_select :post_type_id, PostType.all, :id, :type, { prompt: true }, class: "form-control col-md-1" %>
   </div>
 
@@ -26,8 +25,15 @@
     <%= form.label :Текст_поста, class: "form-label" %>
     <%= form.text_area :post_text, class: "form-control col-md-4" %>
   </div>
+
+  <div>
+    <%= form.label :Автор, class: "form-label" %>
+    <%= form.collection_select :author_id, Author.all, :user_id, lambda { |author| author.user.name }, { prompt: true }, class: "form-control col-md-3" %>
+
+  </div>
+
   <br>
   <div>
-    <%= form.submit "Створити", class: "btn btn-primary" %>
+    <%= form.submit "Обновить", class: "btn btn-primary" %>
   </div>
 <% end %>

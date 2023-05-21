@@ -20,8 +20,11 @@ class PostsController < ApplicationController
   end
 
   # POST /posts or /posts.json
+  # POST /posts or /posts.json
+  # POST /posts or /posts.json
   def create
     @post = Post.new(post_params)
+    @post.authors << Author.find_by(user_id: post_params[:author_id])
 
     respond_to do |format|
       if @post.save
@@ -34,10 +37,19 @@ class PostsController < ApplicationController
     end
   end
 
+
+
+
   # PATCH/PUT /posts/1 or /posts/1.json
   def update
+    puts params[:post][:author_id]
     respond_to do |format|
       if @post.update(post_params)
+        # Удаляем существующую связь автора и поста
+        @post.authors.destroy_all
+        # Создаем новую связь с выбранным автором
+        @post.authors << Author.find(params[:post][:author_id])
+
         format.html { redirect_to post_url(@post), notice: "Post was successfully updated." }
         format.json { render :show, status: :ok, location: @post }
       else
@@ -46,6 +58,9 @@ class PostsController < ApplicationController
       end
     end
   end
+
+
+
 
   # DELETE /posts/1 or /posts/1.json
   def destroy
@@ -64,7 +79,7 @@ class PostsController < ApplicationController
     end
 
     # Only allow a list of trusted parameters through.
-    def post_params
-      params.require(:post).permit(:post_type_id, :title, :post_text)
-    end
+  def post_params
+    params.require(:post).permit(:post_type_id, :title, :post_text, :author_id)
+  end
 end
