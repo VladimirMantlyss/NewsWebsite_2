@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  commentar_text: MyString
+  commentar_date: 2023-05-21 21:42:14
+
+two:
+  user: two
+  commentar_text: MyString
+  commentar_date: 2023-05-21 21:42:14

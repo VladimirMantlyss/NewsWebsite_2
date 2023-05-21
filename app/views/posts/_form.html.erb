@@ -1,0 +1,33 @@
+<%= form_with(model: post) do |form| %>
+  <% if post.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
+
+      <ul>
+        <% post.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :Тип_поста, class: "form-label" %>
+    <%#= form.text_field :post_type_id %>
+    <%= form.collection_select :post_type_id, PostType.all, :id, :type, { prompt: true }, class: "form-control col-md-1" %>
+  </div>
+
+  <div>
+    <%= form.label :Заголовок, class: "form-label" %>
+    <%= form.text_field :title, class: "form-control col-md-3" %>
+  </div>
+
+  <div>
+    <%= form.label :Текст_поста, class: "form-label" %>
+    <%= form.text_area :post_text, class: "form-control col-md-4" %>
+  </div>
+  <br>
+  <div>
+    <%= form.submit "Створити", class: "btn btn-primary" %>
+  </div>
+<% end %>

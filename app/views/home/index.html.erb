@@ -1,0 +1,19 @@
+<h1>Новини</h1>
+
+<div id="News">
+  <div class="list-group">
+    <% @posts.each do |post| %>
+      <div class="list-group-item">
+        <h5 class="mb-1"><%= post.title %></h5>
+        <p class="mb-1"><%= post.post_text %></p>
+        <p class="mb-1">Тип: <%= post.post_type.type %></p>
+        <small><%= post.created_at %></small>
+        <div class="mt-2">
+          <%= link_to "Редагувати", edit_post_path(post), class: "btn btn-secondary mr-2" %>
+          <%= link_to "Детальніше", post_path(post), class: "btn btn-secondary", method: :delete, data: { confirm: "Are you sure?" } %>
+
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
