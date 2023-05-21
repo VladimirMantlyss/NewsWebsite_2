@@ -13,10 +13,10 @@
         <small><%= post.created_at %></small>
         <div class="mt-2">
           <% if current_user %>
-            <p>Идентификатор текущего пользователя: <%= current_user.id %></p>
+<!--            <p>Идентификатор текущего пользователя: <%#= current_user.id %></p>-->
             <% if Author.exists?(user_id: current_user.id) %>
               <% author = Author.find_by(user_id: current_user.id) %>
-              <p>Имя пользователя: <%= author.user.name %></p>
+<!--              <p>Имя пользователя: <%#= author.user.name %></p>-->
               <%= link_to "Редактировать", edit_post_path(post), class: "btn btn-secondary mr-2" %>
               <%= link_to "Подробнее", post_path(post), class: "btn btn-secondary", method: :delete, data: { confirm: "Вы уверены?" } %>
             <% end %>
