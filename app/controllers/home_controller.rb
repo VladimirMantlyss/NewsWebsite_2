@@ -65,7 +65,22 @@ class HomeController < ApplicationController
     render 'home/search_type'
   end
 
+  def search_posts_author
+    author_id = params[:search_posts_author]
+    # puts "post_type_id: #{post_type_id}"
 
+    author = Author.find(author_id)
+    @search_results = author.posts
+    # if post_type_id.present?
+    #   @search_results = Post.joins().where(post_type_id: post_type_id)
+    # else
+    #   @search_results = []
+    # end
+
+    puts "@search_results: #{@search_results.inspect}"
+
+    render 'home/search_type'
+  end
 
 
 

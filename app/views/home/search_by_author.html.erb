@@ -1,0 +1,61 @@
+<h1>Результати пошуку</h1>
+
+<% if @search_results.any? %>
+  <ul>
+    <% @search_results.each do |post| %>
+      <div class="list-group-item">
+        <h3 class="mb-1"><%= post.title %></h3>
+        <br>
+        <p class="mb-1"><%= post.post_text %></p>
+        <h6 class="mb-1">Тип: <%= post.post_type.type %></h6>
+
+        <h6 class="mb-1">Автор: <%= post.authors.first&.user&.name %></h6>
+        <h6> Ключові слова:
+          <% post.keywords.each do |keyword| %>
+            <%= keyword.keyword %>,
+          <% end %>
+        </h6>
+
+
+
+        <small><%= post.created_at %></small>
+
+        <!--        <h6>Коментарі:</h6>-->
+        <%# post.commentars.each do |commentar| %>
+        <!--          <div class="card mb-3">-->
+        <!--            <div class="card-header">-->
+        <%#= commentar.user.name %>
+        <!--            </div>-->
+        <!--            <div class="card-body">-->
+        <!--              <p class="card-text"><%#= commentar.commentar_text %></p>-->
+        <!--            </div>-->
+        <!--            <div class="card-footer text-muted">-->
+        <%#= commentar.created_at %>
+        <!--            </div>-->
+        <!--          </div>-->
+        <%# end %>
+
+        <div class="mt-2">
+          <% if current_user %>
+            <% if Author.exists?(user_id: current_user.id) %>
+              <% author = Author.find_by(user_id: current_user.id) %>
+              <%= link_to "Редагувати", edit_post_path(post), class: "btn btn-secondary mr-2" %>
+              <%= link_to "Докладніше", post_path(post), class: "btn btn-secondary mr-2" %>
+            <% else %>
+              <%#= form_with(model: [post, Commentar.new]) do |form| %>
+              <%#= form.hidden_field :post_id, value: post.id %>
+              <%#= form.text_area :commentar_text, class: "form-control", placeholder: "Введіть ваш коментар" %>
+              <%#= form.submit "Додати комментар", class: "btn btn-primary mt-2" %>
+              <%# end %>
+              <%= link_to "Докладніше", post_path(post), class: "btn btn-secondary mr-2" %>
+            <% end %>
+          <% else %>
+            <p>Пожалуйста, войдите в систему для выполнения действий.</p>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </ul>
+<% else %>
+  <p>Немає результатів</p>
+<% end %>

@@ -56,6 +56,15 @@
         <!--      </li>-->
     </ul>
 
+    <form class="form-inline my-2 my-lg-0" action="<%= search_posts_author_path %>" method="GET">
+      <div class="input-group">
+        <%= select_tag 'search_posts_author', options_for_select(Author.all.map { |auth| [auth.user.name, auth.id] }), prompt: 'Оберіть Автора', class: 'custom-select' %>
+        <div class="input-group-append">
+          <button class="btn btn-outline-success my-2 my-sm-0 ml-2 mr-4" type="submit">Search</button>
+        </div>
+      </div>
+    </form>
+
     <form class="form-inline my-2 my-lg-0" action="<%= search_posts_type_path %>" method="GET">
       <div class="input-group">
         <%= select_tag 'post_type', options_for_select(PostType.all.map { |pt| [pt.type, pt.id] }), prompt: 'Оберіть тип поста', class: 'custom-select' %>
