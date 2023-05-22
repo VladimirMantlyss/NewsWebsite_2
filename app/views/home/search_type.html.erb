@@ -1,7 +1,7 @@
-<h1>Результати пошуку</h1>
+<ul>
+  <h1>Результати пошуку</h1>
 
 <% if @search_results.any? %>
-  <ul>
     <% @search_results.each do |post| %>
       <div class="list-group-item">
         <h3 class="mb-1"><%= post.title %></h3>
@@ -55,7 +55,8 @@
         </div>
       </div>
     <% end %>
-  </ul>
+
 <% else %>
   <p>Немає результатів</p>
 <% end %>
+</ul>
