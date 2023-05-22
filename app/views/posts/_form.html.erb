@@ -27,13 +27,37 @@
   </div>
 
   <div>
-    <%= form.label :Автор, class: "form-label" %>
-    <%= form.collection_select :author_id, Author.all, :user_id, lambda { |author| author.user.name }, { prompt: true }, class: "form-control col-md-3" %>
+    <%= form.label :Ключові_слова, class: "form-label" %>
+    <%= form.collection_check_boxes :keyword_ids, Keyword.all, :id, :keyword , { include_hidden: false } do |cb| %>
+      <div class="form-check">
+        <%= cb.check_box(class: "form-check-input") %>
+        <%= cb.label(class: "form-check-label") %>
+      </div>
+    <% end %>
+  </div>
+
+
+  <div>
+
+    <% if current_user %>
+      <% author = current_user.author %>
+      <% if author %>
+        <br>
+        <p>Текущий автор: <%= author.user.name %></p>
+<!--        <p>Текущий авторИд: <%#= author.id %></p>-->
+        <%#= author = Author.find_by(user_id: 3) %>
+<!--        <p>Текущий авторИд: <%#= author.id %></p>-->
+<!--        <p>Текущий авторИд: <%#= author.user.name %></p>-->
+        <%#= form.hidden_field :author_id, value: author.id %>
+      <% end %>
+    <% end %>
+    <%#= form.collection_select :author_id, Author.all, :user_id, lambda { |author| author.user.name }, { prompt: true }, class: "form-control col-md-3" %>
+    <%#= form.collection_select :author_id, Author.all, :user_id, lambda { |author| author.user.name }, { prompt: true, selected: current_user.author&.id }, class: "form-control col-md-3" %>
 
   </div>
 
   <br>
   <div>
-    <%= form.submit "Обновить", class: "btn btn-primary" %>
+    <%= form.submit "Додати", class: "btn btn-primary" %>
   </div>
 <% end %>

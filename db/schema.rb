@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_21_194158) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_22_110845) do
   create_table "authors", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
@@ -24,6 +24,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_21_194158) do
     t.datetime "commentar_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "post_id"
     t.index ["user_id"], name: "index_commentars_on_user_id"
   end
 
@@ -56,8 +57,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_21_194158) do
     t.bigint "commentar_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id_id", null: false
     t.index ["commentar_id"], name: "index_post_and_commentars_on_commentar_id"
     t.index ["post_id"], name: "index_post_and_commentars_on_post_id"
+    t.index ["user_id_id"], name: "index_post_and_commentars_on_user_id_id"
   end
 
   create_table "post_types", charset: "utf8mb4", force: :cascade do |t|
@@ -69,9 +72,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_21_194158) do
   create_table "posts", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "post_type_id", null: false
     t.string "title"
-    t.string "post_text"
+    t.string "post_text", limit: 2550
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "author_id", null: false
+    t.index ["author_id"], name: "index_posts_on_author_id"
     t.index ["post_type_id"], name: "index_posts_on_post_type_id"
   end
 

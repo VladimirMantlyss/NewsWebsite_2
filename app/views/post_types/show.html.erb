@@ -1,0 +1,25 @@
+<p style="color: green"><%= notice %></p>
+
+
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">Тип поста: <%= @post_type.type %></h5>
+
+  </div>
+</div>
+
+<div>
+
+  <% if @post_type.posts.empty? %>
+    <%= button_to "Видалити", @post_type, method: :delete, class: "btn btn-danger pb-2 mb-4 mt-3" %>
+  <% else %>
+    <br>
+    <p>Неможливо видалити тип поста, так як він має пов'язані пости.</p>
+  <% end %>
+
+  <br>
+  <%= link_to "Редагувати", edit_post_type_path(@post_type), class: "btn btn-primary"%>
+  <%= link_to "Повернутися", post_types_path, class: "btn btn-primary" %>
+
+
+</div>

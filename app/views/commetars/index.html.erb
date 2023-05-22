@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Commetars</h1>
+
+<div id="commetars">
+  <% @commetars.each do |commetar| %>
+    <%= render commetar %>
+    <p>
+      <%= link_to "Show this commetar", commetar %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New commetar", new_commetar_path %>

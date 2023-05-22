@@ -1,0 +1,19 @@
+<p style="color: green"><%= notice %></p>
+
+
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">Тип поста: <%= @keyword.keyword %></h5>
+
+  </div>
+</div>
+
+<div>
+  <br>
+  <%= button_to "Видалити", @keyword, method: :delete, class: "btn btn-danger pb-2 mb-4 mt-3"  %>
+  <br>
+  <%= link_to "Редагувати", edit_keyword_path(@keyword), class: "btn btn-primary"%>
+  <%= link_to "Повернутися", keywords_path, class: "btn btn-primary" %>
+
+
+</div>

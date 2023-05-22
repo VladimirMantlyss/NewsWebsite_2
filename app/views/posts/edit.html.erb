@@ -1,4 +1,4 @@
-<h1>Editing post</h1>
+<h1>Редагування</h1>
 
 <%= form_with(model: @post) do |form| %>
   <% if @post.errors.any? %>
@@ -33,15 +33,24 @@
     <%= form.collection_select :author_id, Author.all, :id, lambda { |author| author.user.name }, { prompt: true }, class: "form-control col-md-3" %>
   </div>
 
+  <div>
+    <%= form.label :Ключові_слова, class: "form-label" %>
+    <% Keyword.all.each do |keyword| %>
+      <div>
+        <%= check_box_tag 'post[keyword_ids][]', keyword.id, @post.keywords.include?(keyword) %>
+        <%= label_tag "post_keyword_#{keyword.id}", keyword.keyword %>
+      </div>
+    <% end %>
+  </div>
+
   <br>
   <div>
-    <%= form.submit "Обновить", class: "btn btn-primary" %>
+    <%= form.submit "Оновити", class: "btn btn-primary" %>
   </div>
 <% end %>
 
 <br>
 
 <div>
-  <%= link_to "Show this post", @post %> |
-  <%= link_to "Back to posts", posts_path %>
+  <%= link_to "Повернутися", posts_path %>
 </div>

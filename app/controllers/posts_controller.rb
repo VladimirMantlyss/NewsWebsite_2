@@ -24,7 +24,19 @@ class PostsController < ApplicationController
   # POST /posts or /posts.json
   def create
     @post = Post.new(post_params)
-    @post.authors << Author.find_by(user_id: post_params[:author_id])
+    # @post.authors << Author.find_by(user_id: post_params[:author_id])
+    # @post.authors << Author.find_by(user_id: 2)
+    @post.author_id = current_user.author.user_id
+    @post.authors << Author.find_by(user_id: current_user.author.user_id)
+
+    # Получите выбранные ключевые слова из формы
+    keyword_ids = params[:post][:keyword_ids]
+
+    # Найдите соответствующие записи Keyword
+    keywords = Keyword.where(id: keyword_ids)
+
+    # Добавьте найденные ключевые слова к посту
+    @post.keywords << keywords
 
     respond_to do |format|
       if @post.save
@@ -44,10 +56,20 @@ class PostsController < ApplicationController
   def update
     respond_to do |format|
       if @post.update(post_params)
-        # Удаляем существующую связь автора и поста
-        @post.authors.destroy_all
-        # Создаем новую связь с выбранным автором
-        @post.authors << Author.find(params[:post][:author_id])
+
+        # # Удаляем существующую связь автора и поста
+        # @post.authors.destroy_all
+        # # Создаем новую связь с выбранным автором
+        # @post.authors << Author.find(params[:post][:author_id])
+
+        # Удаляем существующие связи ключевых слов и поста
+        @post.keywords.clear
+        # Добавляем новые связи с выбранными ключевыми словами
+        keywords_ids = params[:post][:keyword_ids]
+        keywords_ids.each do |keyword_id|
+          keyword = Keyword.find(keyword_id)
+          @post.keywords << keyword if keyword
+        end
 
         format.html { redirect_to post_url(@post), notice: "Post was successfully updated." }
         format.json { render :show, status: :ok, location: @post }
@@ -67,7 +89,7 @@ class PostsController < ApplicationController
     @post.destroy
 
     respond_to do |format|
-      format.html { redirect_to posts_url, notice: "Пост успешно удален." }
+      format.html { redirect_to posts_url, notice: "Пост успішно видален." }
       format.json { head :no_content }
     end
   end

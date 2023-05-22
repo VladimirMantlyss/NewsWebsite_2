@@ -3,19 +3,66 @@
 
 <div class="card">
   <div class="card-body">
-    <h5 class="card-title">Заголовок: <%= @post.title %></h5>
+    <h5 class="card-title"> <%= @post.title %></h5>
     <p class="card-text">Тип поста: <%= @post.post_type.type %></p>
-    <p class="card-text">Текст: <%= @post.post_text %></p>
-    <p class="card-text">Дата: <%= @post.created_at %></p>
+<!--    <p class="post-content"> <%#= @post.post_text %></p>-->
+    <div style="word-wrap: break-word; max-width: 1800px;">
+    <pre class="bg-light p-3" style="overflow-x: auto; white-space: pre-wrap; font-size: 17px;"><%= @post.post_text %></pre>
+    </div>
 
+
+
+    <p class="card-text">Дата: <%= @post.created_at %></p>
+    <h6> Ключові слова:
+      <% @post.keywords.each do |keyword| %>
+        <%= keyword.keyword %>,
+      <% end %>
+    </h6>
+
+    <h6>Коментарі:</h6>
+    <% @post.commentars.each do |commentar| %>
+      <div class="card mb-3">
+        <div class="card-header">
+          <%= commentar.user.name %>
+        </div>
+        <div class="card-body">
+          <p class="card-text"><%= commentar.commentar_text %></p>
+        </div>
+        <div class="card-footer text-muted">
+          <%= commentar.created_at %>
+        </div>
+      </div>
+    <% end %>
+
+
+    <td>
+
+    </td>
   </div>
 </div>
 
 <div>
-  <%= button_to "Видалити", @post, method: :delete, class: "btn btn-primary" %>
-  <br>
-  <%= link_to "Редагувати", edit_post_path(@post), class: "btn btn-primary"%>
-  <%= link_to "Повернутися", posts_path, class: "btn btn-primary" %>
+
+  <% if current_user %>
+    <%= form_with(model: [@post, Commentar.new]) do |form| %>
+    <%= form.hidden_field :post_id, value: @post.id %>
+    <%= form.text_area :commentar_text, class: "form-control form-control-lg", placeholder: "Введіть ваш коментар" %>
+    <%= form.submit "Додати комментар", class: "btn btn-primary mt-2" %>
+    <% end %>
+    <% if Author.exists?(user_id: current_user.id) %>
+      <% author = Author.find_by(user_id: current_user.id) %>
+      <%= link_to "Редагувати", edit_post_path(@post), class: "btn btn-primary pb-2 mb-4 mt-3" %>
+      <%= link_to "Повернутися", :posts, class: "btn btn-primary pb-2 mb-4 mt-3" %>
+      <%= button_to "Видалити пост", @post, method: :delete, class: "btn btn-danger pb-2 mb-4 mt-3" %>
+
+    <% else %>
+      <br>
+      <%= link_to "Повернутися", :back, class: "btn btn-primary pb-2 mb-4" %>
+
+<% end %>
+  <% else %>
+    <p>Пожалуйста, войдите в систему для выполнения действий.</p>
+  <% end %>
 
 
 </div>

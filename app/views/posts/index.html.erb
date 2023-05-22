@@ -10,6 +10,7 @@
       <th>Текст</th>
       <th>Тип</th>
       <th>Автор</th>
+      <th>Ключові слова</th>
       <th>Дата</th>
       <th colspan="3"></th>
     </tr>
@@ -21,6 +22,11 @@
         <td><%= post.post_text %></td>
         <td><%= post.post_type.type %></td>
         <td><%= post.authors.first&.user&.name %></td>
+        <td>
+          <% post.keywords.each do |keyword| %>
+            <%= keyword.keyword %>
+          <% end %>
+        </td>
         <td><%= post.created_at %></td>
         <td>
           <%#= link_to "Редагувати", edit_post_path(post), class:"btn btn-secondary" %>
