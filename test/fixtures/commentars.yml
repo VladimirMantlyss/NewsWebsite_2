@@ -2,10 +2,8 @@
 
 one:
   user: one
-  commentar_text: MyString
-  commentar_date: 2023-05-21 21:42:14
+  comentar_text: MyString
 
 two:
   user: two
-  commentar_text: MyString
-  commentar_date: 2023-05-21 21:42:14
+  comentar_text: MyString

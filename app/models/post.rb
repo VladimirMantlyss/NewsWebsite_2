@@ -3,7 +3,7 @@ class Post < ApplicationRecord
   has_many :post_and_authors, dependent: :destroy
   has_many :authors, through: :post_and_authors
   has_many :post_and_commentars
-  has_many :commentars, through: :post_and_commentars
+  has_many :commentars
 
 
   def post_params

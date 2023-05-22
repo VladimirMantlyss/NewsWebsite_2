@@ -4,10 +4,11 @@
   <div class="list-group">
     <% @posts.each do |post| %>
       <div class="list-group-item">
-        <h5 class="mb-1"><%= post.title %></h5>
+        <h3 class="mb-1"><%= post.title %></h3>
+        <br>
         <p class="mb-1"><%= post.post_text %></p>
-        <p class="mb-1">Тип: <%= post.post_type.type %></p>
-        <p class="mb-1">Автор: <%= post.authors.first&.user&.name %></p>
+        <h6 class="mb-1">Тип: <%= post.post_type.type %></h6>
+        <h6 class="mb-1">Автор: <%= post.authors.first&.user&.name %></h6>
 
 
         <small><%= post.created_at %></small>
@@ -18,7 +19,16 @@
               <% author = Author.find_by(user_id: current_user.id) %>
 <!--              <p>Имя пользователя: <%#= author.user.name %></p>-->
               <%= link_to "Редагувати", edit_post_path(post), class: "btn btn-secondary mr-2" %>
-            <% end %>
+            <% else %>
+              <%= form_with(model: [post, Commentar.new]) do |form| %>
+                <%= form.hidden_field :post_id, value: post.id %>
+                <%= form.text_area :commentar_text, class: "form-control", placeholder: "Введите комментарий" %>
+
+                <%= form.submit "Добавить комментарий", class: "btn btn-primary mt-2" %>
+              <% end %>
+
+
+        <% end %>
           <% else %>
             <p>Пожалуйста, войдите в систему для выполнения действий.</p>
           <% end %>

@@ -1,5 +1,9 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <%= link_to 'News Website', root_path, class:"navbar-brand" %>
+  <% if user_signed_in? %>
+    <% user = User.find_by(id: current_user.id) %>
+    <h3><%= user.name %></h3>
+  <% end %>
   <!--  <a class="navbar-brand" href="#"></a>-->
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -8,6 +12,7 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <% if user_signed_in? %>
+
         <li class="nav-item active">
 
           <%= link_to "Sign Out", destroy_user_session_path, method: :delete, class: "nav-link" %>
@@ -20,24 +25,30 @@
           <%= link_to "Sign In", new_user_session_path, class: "nav-link" %>
         </li>
       <% end %>
+      <% if current_user %>
+        <% if Author.exists?(user_id: current_user.id) %>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Tables
+          Таблиці
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <%#= link_to "Clinics", clinics_path, class: "dropdown-item" %>
-          <%#= link_to "Doctors", doctors_path, class: "dropdown-item" %>
-          <%#= link_to "Patients", patients_path, class: "dropdown-item" %>
-          <%#= link_to "Departments", departments_path, class: "dropdown-item" %>
-          <%#= link_to "Patients Cards", patient_cards_path, class: "dropdown-item" %>
-          <%#= link_to "Specializations", specializations_path, class: "dropdown-item" %>
+
+              <%= link_to "Posts", posts_path, class: "dropdown-item" %>
+              <%#= link_to "Doctors", doctors_path, class: "dropdown-item" %>
+              <%#= link_to "Patients", patients_path, class: "dropdown-item" %>
+              <%#= link_to "Departments", departments_path, class: "dropdown-item" %>
+              <%#= link_to "Patients Cards", patient_cards_path, class: "dropdown-item" %>
+              <%#= link_to "Specializations", specializations_path, class: "dropdown-item" %>
+
+
           <!--          <a class="dropdown-item" href="#">Action1</a>-->
           <!--          <a class="dropdown-item" href="#">Another action</a>-->
           <!--          <div class="dropdown-divider"></div>-->
           <!--          <a class="dropdown-item" href="#">Something else here</a>-->
 
         </div>
-
+        <% end %>
+      <% end %>
         <!--      <li class="nav-item">-->
         <!--        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>-->
         <!--      </li>-->

@@ -24,7 +24,10 @@ class PostsController < ApplicationController
   # POST /posts or /posts.json
   def create
     @post = Post.new(post_params)
-    @post.authors << Author.find_by(user_id: post_params[:author_id])
+    # @post.authors << Author.find_by(user_id: post_params[:author_id])
+    # @post.authors << Author.find_by(user_id: 2)
+    @post.author_id = current_user.author.user_id
+    @post.authors << Author.find_by(user_id: current_user.author.user_id)
 
     respond_to do |format|
       if @post.save
